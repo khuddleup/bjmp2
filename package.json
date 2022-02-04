@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "firebase": "^9.6.5"
+  },
+  "name": "bjmp2",
+  "version": "1.0.0",
+  "main": "firebase.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khuddleup/bjmp2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khuddleup/bjmp2/issues"
+  },
+  "homepage": "https://github.com/khuddleup/bjmp2#readme",
+  "description": ""
+}
