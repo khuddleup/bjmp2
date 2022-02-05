@@ -50,7 +50,6 @@ firebase.initializeApp(config);
  * Data object to be written to Firebase.
  */
 
-var data = {sender: null, timestamp: null, lat: null, lng: null};
 
 function makeInfoBox(controlDiv, map) {
   // Set CSS for the control border.
@@ -80,111 +79,79 @@ function makeInfoBox(controlDiv, map) {
       /**
        * Creates a map object with a click listener and a heatmap.
        */
-  function initMap() {
-    console.log ("inside of init Map")
-    
-    //RENDER MAP
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 11,
-      center: {lat: 47.60621, lng: -122.332071},
-    });
-    
-    // SET MARKER AS CUSTOM IMAGE
-    
-    // // HARDCODED DATA BELOW
-    // new google.maps.Marker({
-    //   icon: image,
-    //   position: {lat: 47.60621, lng: -122.332071},
-    //   map,
-    // });
+    function initMap() {
+        console.log("inside of init Map")
 
-    
-    
-    // LISTENS FOR THE CLICK AND ADDS THEM TO THE MAP
-    map.addListener('click', function(e) {
-      data.lat = e.latLng.lat();
-      data.lng = e.latLng.lng();
-      addToFirebase(data);
-    });
+        //RENDER MAP
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 11,
+            center: { lat: 47.60621, lng: -122.332071 },
+        });
+
+        function addMarker(e) {
+        const data = {sender: null, timestamp: null, lat: null, lng: null};
+        data.lat = e.latLng.lat();
+        data.lng = e.latLng.lng();
+        addToFirebase(data);
+
+        // show info info window -- MVP
+        
+        createMarker(map, data)
+    }
+
+        // LISTENS FOR THE CLICK AND ADDS THEM TO THE MAP
+        map.addListener('click', addMarker)
+
+        initFirebase(map);
+    }
+
+    function createMarker(map, data) {
+    console.log("creating marker")
     const image = {
-            url:"https://upload.wikimedia.org/wikipedia/commons/e/e7/Fist_.svg",
+            url: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Fist_.svg",
             scaledSize: new google.maps.Size(30, 30), // scaled size
-            origin: new google.maps.Point(0,0), // origin
+            origin: new google.maps.Point(0, 0), // origin
             anchor: new google.maps.Point(0, 0), // anchor
         };
-    var point = new google.maps.Marker({
-              icon: image,
-              map: map,
-              position: {
+
+        var point = new google.maps.Marker({
+            icon: image,
+            map: map,
+            position: {
                 lat: data.lat,
                 lng: data.lng,
-            } 
-          });
+            }
 
-   initFirebase.bind(undefined, map); 
-  }
-
-  initFirebase()
-
-
-  
+        })
+    }
 
   function initFirebase(map) {
     console.log ("inside of init firebase")
 
 // Reference to the clicks in Firebase.
-        var startTime = new Date().getTime()
+        // var startTime = new Date().getTime()
         var clicks = firebase.database().ref('clicks');
-        
     
     // Listen for clicks and add them to the map.
-        clicks.orderByChild('timestamp').startAt(startTime).on('child_added',
+        clicks.on('child_added',
           function(snapshot) {
           
         // Get that click from firebase.
             var data = snapshot.val();
-                console.log(data);
-                var point = (data.lat, data.lng)
-                console.log(point)
-                
-            map.getData().push(point);
-            console.log ("does mat.getData work?")
+                createMarker(map, data)
+            
         // Add the point to the map.
   
         });
-      }  
-      function getTimestamp(addClick) {
-        console.log ("inside of get timestamp")
-        // Reference to location for saving the last click time.
-        var ref = firebase.database().ref('last_message/' + data.sender);
-
-        ref.onDisconnect().remove();  // Delete reference from firebase on disconnect.
-
-        // Set value to timestamp.
-        ref.set(firebase.database.ServerValue.TIMESTAMP, function(err) {
-          if (err) {  // Write to last message was unsuccessful.
-            console.log(err);
-          } else {  // Write to last message was successful.
-            ref.once('value', function(snap) {
-              addClick(snap.val());  // Add click with same timestamp.
-            }, function(err) {
-              console.warn(err);
-            });
-          }
-        });
-      }    
+      }      
 
   function addToFirebase(data) {
         console.log ("inside of add to firebase")
-        getTimestamp(function(timestamp) {
-          // Add the new timestamp to the record data.
-          data.timestamp = timestamp;
-          var ref = firebase.database().ref('clicks').push(data, function(err) {
+        var ref = firebase.database().ref('clicks').push(data, function(err) {
             if (err) {  // Data was not written to firebase.
               console.warn(err);
             }
           });
-        });
   }    
   </script>
     <script defer
