@@ -39,12 +39,11 @@
 
     <!-- <div id="map"> -->
 
-      <div class="container">
+      <!-- <div class="container">
         <a href="#" class="button">Share Black Joy</a>
-      
-      </div>
+      </div> -->
 
-      <div class="popup">
+      <div class="popup" id="leaveMessage">
         <div class="popup-content">
           <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="close">
           <input type="text" placeholder="What happened here?">
@@ -147,7 +146,7 @@ function makeInfoBox(controlDiv, map) {
         data.lat = e.latLng.lat();
         data.lng = e.latLng.lng();
         addToFirebase(data);
-
+        openForm();
         // show info info window -- MVP
         
         createMarker(map, data)
@@ -208,9 +207,9 @@ function makeInfoBox(controlDiv, map) {
           });
   }
   
-  function openform (){
-    console.log ("Open Form")
-        document.getElementById("popup").style.display= "block";
+  function openForm (){
+        document.getElementById("leaveMessage").style.display= "block";
+        console.log ("Open Form")
       }
   
   </script>
