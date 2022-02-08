@@ -46,9 +46,9 @@
       <div class="popup" id="leaveMessage">
         <div class="popup-content">
           <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="close">
-          <input type="text" placeholder="What happened here?">
+          <input type="text" placeholder="What happened here?" id="message">
           <!-- <a href="#" class="button">Share Black Joy</a> -->
-          <button class="button"  onclick="openform()">Open Form</button>
+          <button class="button" id="share"  onclick="submitForm()">Share</button>
         </div>
       </div>
 
@@ -65,6 +65,8 @@
         
       //   })
       // }
+
+      // Can we put this inside of a function? it looks like a lost pet! 
         document.querySelector(".close").addEventListener("click", function(){
           document.querySelector(".popup").style.display = "none"
         })
@@ -142,7 +144,7 @@ function makeInfoBox(controlDiv, map) {
         });
 
         function addMarker(e) {
-        const data = {sender: null, timestamp: null, lat: null, lng: null};
+        const data = {sender: null, lat: null, lng: null};
         data.lat = e.latLng.lat();
         data.lng = e.latLng.lng();
         addToFirebase(data);
@@ -154,6 +156,7 @@ function makeInfoBox(controlDiv, map) {
 
         // LISTENS FOR THE CLICK AND ADDS THEM TO THE MAP
         map.addListener('click', addMarker)
+        // We want the add Listener to call the openForm function
 
         initFirebase(map);
     }
@@ -211,6 +214,42 @@ function makeInfoBox(controlDiv, map) {
         document.getElementById("leaveMessage").style.display= "block";
         console.log ("Open Form")
       }
+
+  // CREATE SUBMIT FORM FUNCTION WITH AN EVENT LISTENER INSIDE THAT SUBMITS MESSAGE TO FIREBASE
+  // AND CALLS CREATE MARKER
+
+  //Reference for form collection(3)
+let formMessage = firebase.database().ref('shareClick');
+
+//listen for submit event//(1)
+document
+  .getElementById("message")
+  .addEventListener("share", submitForm);
+
+//Submit form(1.2)
+function submitForm(e) {
+  e.preventDefault();
+  // Get Values from the DOM
+  let messsage = document.querySelector('#message').value;
+  console.log ("Form has been submitted")
+
+
+  //send message values
+  sendMessage(message);
+
+  //Form Reset After Submission(7)
+    document.getElementById("leaveMessage").reset();
+  }
+
+  function sendMessage(message) {
+  let newFormMessage = formMessage.push();
+  newFormMessage.set({
+    message: message,
+  });
+}
+
+
+  // CREATE FUNCTION THAT DISPLAYS INFO WINDOW ON THE CLICK OF A MARKER WITH MESSAGE FROM FIREBASE
   
   </script>
 
