@@ -1,29 +1,32 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- <script src="www.gstatic.com/firebasejs/9.6.5/firebase.js"></script> -->
-    <link rel="stylesheet" href="formstyle.css">
 
-    <style>
-      /* Always set the map height explicitly to define the size of the div
+<head>
+  <!-- <script src="www.gstatic.com/firebasejs/9.6.5/firebase.js"></script> -->
+  <link rel="stylesheet" href="formstyle.css">
+
+  <style>
+    /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  
+    #map {
+      height: 100%;
+    }
 
-  </head>
-  <body>
+    /* Optional: Makes the sample page fill the window. */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 
-<!--     
+
+</head>
+
+<body>
+
+  <!--     
     <div class="popup">
     <div class="popup-content">
       <img url="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="close">
@@ -32,232 +35,267 @@
     </div>
     </div> -->
 
-    
-    <!-- </div>  -->
-  
-    <div id="map" ></div>
 
-    <!-- <div id="map"> -->
+  <!-- </div>  -->
 
-      <!-- <div class="container">
+  <div id="map"></div>
+
+  <!-- <div id="map"> -->
+
+  <!-- <div class="container">
         <a href="#" class="button">Share Black Joy</a>
       </div> -->
 
-      <div class="popup" id="leaveMessage">
-        <div class="popup-content">
-          <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="close">
-          <input type="text" placeholder="What happened here?" id="message">
-          <!-- <a href="#" class="button">Share Black Joy</a> -->
-          <button class="button" id="share"  onclick="submitForm()">Share</button>
-        </div>
-      </div>
-
-   
-    
-    
-
-
-      <script>
-
-      //   function openform (){
-      //   document.getElementById("button").addEventListener("click", function(){
-      //     document.querySelector(".popup").style.display = "flex";
-        
-      //   })
-      // }
-
-      // Can we put this inside of a function? it looks like a lost pet! 
-        document.querySelector(".close").addEventListener("click", function(){
-          document.querySelector(".popup").style.display = "none"
-        })
-      
-      </script>
+  <div class="popup" id="leaveMessage">
+    <div class="popup-content">
+      <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="close">
+      <input type="text" placeholder="What happened here?" id="message">
+      <!-- <a href="#" class="button">Share Black Joy</a> -->
+      <button class="button" id="share">Share</button>
+    </div>
+  </div>
 
 
 
-    
-
-    <!----- KAYLA: ADDED COMPAT TO SRC URLS: 
-    SOURCE: https://stackoverflow.com/questions/69140697/unexpected-token-export-firebase-app-js1590  -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-database-compat.js"></script>
- 
- <script> 
-
-/**
- * Firebase config block.
- */
-var config = {
-  apiKey: "AIzaSyBKSXFT6PGoaJTTb-TqyT2SCFFR-Zcea38",
-  authDomain: "pea922.firebaseapp.com",
-  databaseURL: "https://pea922-default-rtdb.firebaseio.com/",
-  projectId: "pea922",
-  storageBucket: "pea922.appspot.com",
-  messagingSenderId: "888111191717",
-  appId: "1:888111191717:web:5866818bc5cfdaacdd1f4c",
-  measurementId: "G-S02HT6LTGT",
-};
-
-firebase.initializeApp(config); 
-
-/**
- * Data object to be written to Firebase.
- */
-
-
-function makeInfoBox(controlDiv, map) {
-  // Set CSS for the control border.
-  var controlUI = document.createElement('div');
-  controlUI.style.boxShadow = 'rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px';
-  controlUI.style.backgroundColor = '#fff';
-  controlUI.style.border = '2px solid #fff';
-  controlUI.style.borderRadius = '2px';
-  controlUI.style.marginBottom = '22px';
-  controlUI.style.marginTop = '10px';
-  controlUI.style.textAlign = 'center';
-  controlDiv.appendChild(controlUI);
-
-  // Set CSS for the control interior.
-  var controlText = document.createElement('div');
-  controlText.style.color = 'rgb(25,25,25)';
-  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-  controlText.style.fontSize = '100%';
-  controlText.style.padding = '6px';
-  controlText.textContent =
-      'The map shows all clicks made in the last 10 minutes.';
-  controlUI.appendChild(controlText);
-}
 
 
 
-      /**
-       * Creates a map object with a click listener and a heatmap.
-       */
-    function initMap() {
-        console.log("inside of init Map")
+  <script>
 
-        //RENDER MAP
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 11,
-            center: { lat: 47.60621, lng: -122.332071 },
-        });
+    //   function openform (){
+    //   document.getElementById("button").addEventListener("click", function(){
+    //     document.querySelector(".popup").style.display = "flex";
 
-        function addMarker(e) {
-        const data = {sender: null, lat: null, lng: null};
-        data.lat = e.latLng.lat();
-        data.lng = e.latLng.lng();
-        addToFirebase(data);
-        openForm();
-        // show info info window -- MVP
-        
-        createMarker(map, data)
+    //   })
+    // }
+
+    // Can we put this inside of a function? it looks like a lost pet! 
+
+    function closeForm() {
+      document.querySelector(".popup").style.display = "none"
     }
 
-        // LISTENS FOR THE CLICK AND ADDS THEM TO THE MAP
-        map.addListener('click', addMarker)
-        // We want the add Listener to call the openForm function
-
-        initFirebase(map);
-    }
-
-    function createMarker(map, data) {
-    console.log("creating marker")
-    const image = {
-            url: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Fist_.svg",
-            scaledSize: new google.maps.Size(30, 30), // scaled size
-            origin: new google.maps.Point(0, 0), // origin
-            anchor: new google.maps.Point(0, 0), // anchor
-        };
-
-        var point = new google.maps.Marker({
-            icon: image,
-            map: map,
-            position: {
-                lat: data.lat,
-                lng: data.lng,
-            }
-
-        })
-    }
-
-  function initFirebase(map) {
-    console.log ("inside of init firebase")
-
-// Reference to the clicks in Firebase.
-        // var startTime = new Date().getTime()
-        var clicks = firebase.database().ref('clicks');
-    
-    // Listen for clicks and add them to the map.
-        clicks.on('child_added',
-          function(snapshot) {
-          
-        // Get that click from firebase.
-            var data = snapshot.val();
-                createMarker(map, data)
-            
-        // Add the point to the map.
-  
-        });
-      }      
-
-  function addToFirebase(data) {
-        console.log ("inside of add to firebase")
-        var ref = firebase.database().ref('clicks').push(data, function(err) {
-            if (err) {  // Data was not written to firebase.
-              console.warn(err);
-            }
-          });
-  }
-  
-  function openForm (){
-        document.getElementById("leaveMessage").style.display= "block";
-        console.log ("Open Form")
-      }
-
-  // CREATE SUBMIT FORM FUNCTION WITH AN EVENT LISTENER INSIDE THAT SUBMITS MESSAGE TO FIREBASE
-  // AND CALLS CREATE MARKER
-
-  //Reference for form collection(3)
-let formMessage = firebase.database().ref('shareClick');
-
-//listen for submit event//(1)
-document
-  .getElementById("message")
-  .addEventListener("share", submitForm);
-
-//Submit form(1.2)
-function submitForm(e) {
-  e.preventDefault();
-  // Get Values from the DOM
-  let messsage = document.querySelector('#message').value;
-  console.log ("Form has been submitted")
+    document.querySelector(".close").addEventListener("click", closeForm)
 
 
-  //send message values
-  sendMessage(message);
-
-  //Form Reset After Submission(7)
-    document.getElementById("leaveMessage").reset();
-  }
-
-  function sendMessage(message) {
-  let newFormMessage = formMessage.push();
-  newFormMessage.set({
-    message: message,
-  });
-}
-
-
-  // CREATE FUNCTION THAT DISPLAYS INFO WINDOW ON THE CLICK OF A MARKER WITH MESSAGE FROM FIREBASE
-  
   </script>
 
 
 
 
-    <script defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiIWgSVB4VfUOPdHNGcYt8Tw767VmHcBg&libraries=visualization&callback=initMap">
+
+  <!----- KAYLA: ADDED COMPAT TO SRC URLS: 
+    SOURCE: https://stackoverflow.com/questions/69140697/unexpected-token-export-firebase-app-js1590  -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.5/firebase-database-compat.js"></script>
+
+  <script>
+
+    /**
+     * Firebase config block.
+     */
+    var config = {
+      apiKey: "AIzaSyBKSXFT6PGoaJTTb-TqyT2SCFFR-Zcea38",
+      authDomain: "pea922.firebaseapp.com",
+      databaseURL: "https://pea922-default-rtdb.firebaseio.com/",
+      projectId: "pea922",
+      storageBucket: "pea922.appspot.com",
+      messagingSenderId: "888111191717",
+      appId: "1:888111191717:web:5866818bc5cfdaacdd1f4c",
+      measurementId: "G-S02HT6LTGT",
+    };
+
+    firebase.initializeApp(config);
+
+    /**
+     * Data object to be written to Firebase.
+     */
+
+
+    function makeInfoBox(controlDiv, map) {
+      // Set CSS for the control border.
+      var controlUI = document.createElement('div');
+      controlUI.style.boxShadow = 'rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px';
+      controlUI.style.backgroundColor = '#fff';
+      controlUI.style.border = '2px solid #fff';
+      controlUI.style.borderRadius = '2px';
+      controlUI.style.marginBottom = '22px';
+      controlUI.style.marginTop = '10px';
+      controlUI.style.textAlign = 'center';
+      controlDiv.appendChild(controlUI);
+
+      // Set CSS for the control interior.
+      var controlText = document.createElement('div');
+      controlText.style.color = 'rgb(25,25,25)';
+      controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+      controlText.style.fontSize = '100%';
+      controlText.style.padding = '6px';
+      controlText.textContent =
+        'The map shows all clicks made in the last 10 minutes.';
+      controlUI.appendChild(controlText);
+    }
+
+
+
+    /**
+     * Creates a map object with a click listener and a heatmap.
+     */
+    function initMap() {
+      console.log("inside of init Map")
+
+      //RENDER MAP
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 11,
+        center: { lat: 47.60621, lng: -122.332071 },
+      });
+
+      function addMarker(e) {
+        const data = { sender: null, lat: null, lng: null };
+        data.lat = e.latLng.lat();
+        data.lng = e.latLng.lng();
+        addToFirebase(data);
+        // show info info window -- MVP
+
+        createMarker(map, data)
+      }
+
+      // LISTENS FOR THE CLICK AND ADDS THEM TO THE MAP
+      map.addListener('click', openForm)
+      // We want the add Listener to call the openForm function
+
+      initFirebase(map);
+    }
+
+    function createMarker(map, data) {
+      console.log("creating marker")
+      const image = {
+        url: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Fist_.svg",
+        scaledSize: new google.maps.Size(30, 30), // scaled size
+        origin: new google.maps.Point(0, 0), // origin
+        anchor: new google.maps.Point(0, 0), // anchor
+      };
+
+      var point = new google.maps.Marker({
+        icon: image,
+        map: map,
+        position: {
+          lat: data.lat,
+          lng: data.lng,
+        }
+      })
+
+    const infowindow = new google.maps.InfoWindow({
+    content: data.message,
+  });
+  
+  point.addListener("click", () => {
+    infowindow.open({
+      anchor: point,
+      map,
+      shouldFocus: false,
+    });
+  });
+
+    }
+
+    function initFirebase(map) {
+      console.log("inside of init firebase")
+
+      // Reference to the clicks in Firebase.
+      // var startTime = new Date().getTime()
+      var clicks = firebase.database().ref('clicks');
+
+      // Listen for clicks and add them to the map.
+      clicks.on('child_added',
+        function (snapshot) {
+
+          // Get that click from firebase.
+          var data = snapshot.val();
+          createMarker(map, data)
+
+          // Add the point to the map.
+
+        });
+    }
+
+    function addToFirebase(data) {
+      console.log("inside of add to firebase")
+      var ref = firebase.database().ref('clicks').push(data, function (err) {
+        if (err) {  // Data was not written to firebase.
+          console.warn(err);
+        }
+      });
+    }
+
+
+    function openForm(e) {
+      const data = { sender: null, lat: null, lng: null, message: null};
+      data.lat = e.latLng.lat();
+      data.lng = e.latLng.lng();
+      document.getElementById("leaveMessage").style.display = "block";
+      console.log("Open Form")
+
+
+      function submitForm(e) {
+        e.preventDefault();
+        // Get Values from the DOM
+        data.message = (document.getElementById("message").value);
+
+
+
+        //send message values
+        addToFirebase(data);
+
+        //Form Reset After Submission(7)
+        document.querySelector('#message').value = "";
+        // document.getElementById("leaveMessage").reset();
+
+        closeForm()
+
+        document
+        .getElementById("share")
+        .removeEventListener("click", submitForm);
+      }
+      document
+      .getElementById("share")
+      .addEventListener("click", submitForm);
+      
+    }
+
+    // CREATE SUBMIT FORM FUNCTION WITH AN EVENT LISTENER INSIDE THAT SUBMITS MESSAGE TO FIREBASE
+    // AND CALLS CREATE MARKER
+
+    //Reference for form collection(3)
+    // let formMessage = firebase.database().ref('shareClick');
+
+    //listen for submit event//(1)
+
+    // document
+    //   .getElementById("share")
+    //   .addEventListener("click", submitForm);
+
+    //Submit form(1.2)
+
+
+    // function sendMessage(msg) {
+    //   addToFirebase({
+    //     message: msg,
+    //   })
+    // };
+
+
+
+  // CREATE FUNCTION THAT DISPLAYS INFO WINDOW ON THE CLICK OF A MARKER WITH MESSAGE FROM FIREBASE
+
+  </script>
+
+
+
+
+  <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiIWgSVB4VfUOPdHNGcYt8Tw767VmHcBg&libraries=visualization&callback=initMap">
     </script>
-  </body>
+</body>
+
 </html>
