@@ -1,4 +1,11 @@
 
+
+
+/* font-family: 'Monoton', cursive;
+font-family: 'Roboto Mono', monospace; */
+
+
+
 .container{
     position: absolute;
     top: 50%;
@@ -10,58 +17,74 @@
 
 
 .button{
-    background: #fff;
+    background: #F860FF;
     padding: 10px 15px;
-    color: green;
+    color: #2d2c45;
     font-weight: bolder;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-size: 18px;
-    border-radius: 5px;
+    border-radius: 12.5px;
     box-shadow: 6px 6px 29px -4px rgba(0,0,0,0.75);
     margin-top: 25px;
     text-decoration: none;
     transition: 0.4s;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 600;
+    font-size: 16px;
+    
 }
 
 .button:hover{
-    background: grey;
-    color: #fff;
+    background: #2d2c45;
+    color: #F860FF;
 }
 
 .popup{
-    background: rgb(238, 8, 8);
-    height: 350px;
-    width: 600px;
+    background: #7FD8D8;
+    border-radius: 12.5px;
+    height: 250px;
+    width: 500px;
     position: absolute;
-    top: 20px;
+    top: 50%;
+    transform: translate(-50%, -50%);
     display: none;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin: auto;
     
-    
 }
 
 .popup-content{
     height: 250px;
     width: 500px;
-    background: rgb(16, 219, 60);
+    border-radius: 12.5px;
+    background: #7FD8D8;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 12.5px;
     position: relative;
 
 
 }
 
-input{
+textarea{
     margin: 20px auto;
     display: block;
     width: 50%;
     height: 50%;
     padding: 8px;
-    border: 1px solid brown;
+    border-radius: 12.5px;
+    border: 1px solid #F1A331;
+    background: #2d2c45;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 300;
+    font-size: 14px;
+    color: #F1A331;
 }
+
+textarea::placeholder {
+    color: #F1A331;  
+  }
 
 /* input.text{
     word-break: break-all;
@@ -69,14 +92,14 @@ input{
 
 .close{
     position: absolute;
-    top: -15px;
-    right: -15px;
-    background: #fff;
+    top: 5px;
+    right: 5px;
+    background: #7FD8D8;
     height: 20px;
     width: 20px;
     border-radius: 50%;
     box-shadow: 6px 6px 29px -4px rgba(0,0,0,0.75);
     cursor: pointer;
-
-
 }
+
+

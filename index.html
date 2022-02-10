@@ -4,6 +4,9 @@
 <head>
   <!-- <script src="www.gstatic.com/firebasejs/9.6.5/firebase.js"></script> -->
   <link rel="stylesheet" href="formstyle.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Roboto+Mono:wght@300;600&display=swap" rel="stylesheet">
 
   <style>
     /* Always set the map height explicitly to define the size of the div
@@ -48,14 +51,19 @@
         <a href="#" class="button">Share Black Joy</a>
       </div> -->
 
+  <div class="container">
   <div class="popup" id="leaveMessage">
     <div class="popup-content">
       <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="close">
-      <input type="text" placeholder="What happened here?" id="message">
+      <textarea type="text"placeholder="What happened here? Leave a note to share an experience of Black joy!"id="message"rows="14"cols="10" wrap="soft"></textarea>
+
+      <!-- placeholder="What happened here? Leave a note to share an experience of Black joy!" -->
+      <!-- <input type="text" placeholder="What happened here? Leave a note to share an experience of Black joy!" id="message"> -->
       <!-- <a href="#" class="button">Share Black Joy</a> -->
-      <button class="button" id="share">Share</button>
+      <button class="button" id="share">SHARE</button>
     </div>
   </div>
+</div>
 
 
 
