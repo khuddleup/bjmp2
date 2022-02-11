@@ -1,11 +1,4 @@
 
-
-
-/* font-family: 'Monoton', cursive;
-font-family: 'Roboto Mono', monospace; */
-
-
-
 .container{
     position: absolute;
     top: 0px;
@@ -28,7 +21,7 @@ font-family: 'Roboto Mono', monospace; */
     font-family: 'Monoton', cursive;
     color: #F860FF;
     font-size: 54px;
-  }
+}
 
 .button{
     background: #F860FF;
@@ -101,11 +94,7 @@ textarea{
 
 textarea::placeholder {
     color: #F1A331;  
-  }
-
-/* input.text{
-    word-break: break-all;
-} */
+}
 
 .close{
     position: absolute;
@@ -119,26 +108,6 @@ textarea::placeholder {
     cursor: pointer;
 }
 
-
-
-/* .info{
-    background: #F1A331;
-    border-radius: 25px;
-    height: 200px;
-    width: 400px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px; */
-    /* transform: translate(-50%, -50%); */
-    /* display: none; */
-    /* justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin: auto;
-    opacity: .5;  
-} */
 
 .info-content{
     background: #F1A331;
