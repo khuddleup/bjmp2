@@ -53,6 +53,12 @@
   <!-- <div class="container">
         <a href="#" class="button">Share Black Joy</a>
       </div> -->
+      <!-- <div class="info"> -->
+        <div class="info-content">
+          <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png" alt="Close" class="collapse">
+        <p rows="14"cols="10" wrap="soft">The Black Joy Map is a collection of data points...</p>
+        </div>
+      <!-- </div> -->
 
   
   <div class="popup" id="leaveMessage">
@@ -86,6 +92,14 @@
     }
 
     document.querySelector(".close").addEventListener("click", closeForm)
+
+    function closeInfo() {
+      document.querySelector(".info-content").style.display = "none"
+    }
+
+    document.querySelector(".collapse").addEventListener("click", closeInfo)
+
+    
 
 
   </script>
@@ -545,7 +559,7 @@
 ],
       });
 
-
+ 
 
       function addMarker(e) {
         const data = { sender: null, lat: null, lng: null };

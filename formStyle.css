@@ -120,3 +120,61 @@ textarea::placeholder {
 }
 
 
+
+/* .info{
+    background: #F1A331;
+    border-radius: 25px;
+    height: 200px;
+    width: 400px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px; */
+    /* transform: translate(-50%, -50%); */
+    /* display: none; */
+    /* justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    opacity: .5;  
+} */
+
+.info-content{
+    background: #F1A331;
+    height: 200px;
+    width: 400px;
+    padding: 20px;
+    border-radius: 25px;
+    position: absolute;
+    opacity: .8;  
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.collapse{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #F1A331;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    box-shadow: 6px 6px 29px -4px rgba(0,0,0,0.75);
+    cursor: pointer;
+    opacity: .8;
+}
+
+p{
+    margin: 20px auto;
+    padding: 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: bolder;
+    font-size: 18px;
+    color: #2d2c45;
+}
